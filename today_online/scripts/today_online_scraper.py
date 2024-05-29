@@ -1,5 +1,3 @@
-# Import necessary libraries and modules
-
 from bs4 import BeautifulSoup 
 from selenium import webdriver 
 from selenium.webdriver.common.by import By 
@@ -9,7 +7,6 @@ import json
 from tqdm import trange
 
 
-# Want the article body, summary, and URL
 
 # Function to navigate to a specific category URL
 def go_to_category(driver, category_URL):
@@ -31,7 +28,7 @@ def scrape_categories(driver, base_url):
     sub_cats.remove('watch')
     sub_cats.remove('myfeed')
     return sub_cats
-# # Function to gather article URLs from a category page
+# Function to gather article URLs from a category page
 def gather_article_urls(driver):
     urls = []
     article_cards = driver.find_elements(By.CLASS_NAME, "card-object__figure")
@@ -53,7 +50,7 @@ def scrape_articles(scraped_articles, driver, urls, sub_url):
         try:
                 # Navigate to the article page
                 driver.get(url)
-                time.sleep(2)  # Waiting for the page to load
+                time.sleep(2)  
 
                 # Get article summaries
                 summary_elements = driver.find_elements(By.CSS_SELECTOR, "div.text-long ul li")
@@ -79,6 +76,7 @@ def scrape_articles(scraped_articles, driver, urls, sub_url):
     section = f"{sub_url} section"
     scraped_articles[section] = sub_url_ls
 
+# Function to run the scraper
 def run_scraper(base_url):
     options = Options()
     options.add_argument("--headless=new")
@@ -86,7 +84,9 @@ def run_scraper(base_url):
     driver.maximize_window()
     scraped_articles = {}
     driver.get(base_url)
-    time.sleep(2)  # Wait for the page to load
+    
+    # Wait for the page to load
+    time.sleep(2) 
     category_sub_URLs = scrape_categories(driver, base_url)
     for i in trange(len(category_sub_URLs)):
         print(f'Collecting data for {category_sub_URLs[i]} section...')
