@@ -8,8 +8,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options 
 
 
-
-
 # Function to navigate to a specific category URL
 def go_to_category(driver, category_URL):
     driver.get(category_URL)
@@ -71,7 +69,6 @@ def scrape_articles(scraped_articles, driver, urls, sub_url):
                 except Exception as e:
                     sub_url_hash['Article Body'] = None
                     print("Body paragraphs not extracted")
-
         except Exception as e:
                 print(f"Error scraping article: {e}")
         sub_url_ls.append(sub_url_hash)
@@ -97,7 +94,6 @@ def run_scraper(base_url):
         urls = gather_article_urls(driver)
         scrape_articles(scraped_articles, driver, urls, category_sub_URLs[i])
         print(f"Done collecting data for {category_sub_URLs[i]} section...\n")
-        break
     # Close the driver after scraping
     driver.quit()
     # Write files to json 
