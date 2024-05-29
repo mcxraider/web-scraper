@@ -1,10 +1,12 @@
-from bs4 import BeautifulSoup 
-from selenium import webdriver 
-from selenium.webdriver.common.by import By 
-from selenium.webdriver.chrome.options import Options 
 import time
 import json
 from tqdm import trange
+
+# Using pure Selenium for this job
+from selenium import webdriver 
+from selenium.webdriver.common.by import By 
+from selenium.webdriver.chrome.options import Options 
+
 
 
 
@@ -95,11 +97,13 @@ def run_scraper(base_url):
         urls = gather_article_urls(driver)
         scrape_articles(scraped_articles, driver, urls, category_sub_URLs[i])
         print(f"Done collecting data for {category_sub_URLs[i]} section...\n")
+        break
     # Close the driver after scraping
     driver.quit()
     # Write files to json 
     with open("today_online/articles.json", "w", encoding='utf-8') as fout:
         json.dump(scraped_articles, fout, indent=4, ensure_ascii=False)
+
 
 if __name__ == "__main__":
     run_scraper("https://www.todayonline.com/")
